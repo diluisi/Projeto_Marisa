@@ -13,48 +13,42 @@ library(RColorBrewer)
 
 # Define UI for application that draws a histogram
 shinyUI(dashboardPage(
-  dashboardHeader(title = "Basic dashboard",
-                  dropdownMenu(type = "tasks",
-                               messageItem(
-                                 from = "Diego Silva",
-                                 message = "Seja bem vindo."
-                               ),
-                               messageItem(
-                                 from = "Ajuda",
-                                 message = "Como uso o Dashboard",
-                                 icon = icon("life-ring"),
-                                 href = "https://github.com/diluisi/Projeto_Marisa"
-                               )
-                  )
-                  ),
+  
+  dashboardHeader(
+    title = tags$a(href= "http://ufabc.edu.br/",align="right",
+                   tags$img(src="./ufabc.png")),
+    dropdownMenu(type = "tasks",
+    messageItem(from = "Diego Silva",
+                message = "Seja bem vindo."),
+    messageItem(from = "Ajuda",
+                message = "Como uso o Dashboard",
+                icon = icon("life-ring"),
+                href = "https://raw.githubusercontent.com/diluisi/Projeto_Marisa/master/README.md")
+    )),
   
   dashboardSidebar(
-    dashboardSidebar(
-      sidebarMenu(
-        menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-        menuItem("Widgets", tabName = "widgets", icon = icon("th")),
-        menuItem("Source code", icon = icon("file-code-o"), 
-                 href = "https://github.com/diluisi/Projeto_Marisa")
+    sidebarMenu(
+      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+      menuItem("Widgets", tabName = "widgets", icon = icon("th")),
+      menuItem("Source code", icon = icon("file-code-o"),href = "https://github.com/diluisi/Projeto_Marisa"),
+      menuItem("UFABC", icon = icon("university"),href = "http://www.ufabc.edu.br")
       )
-    )
-  ),
+    ),
+  
   dashboardBody(
     tabItems(
       # First tab content
-      tabItem(tabName = "dashboard",
-              fluidRow(
-                box(plotOutput("plot1", height = 250)),
-                
-                box(
-                  title = "Controls",
-                  sliderInput("slider", "Number of observations:", 1, 100, 50)
+      tabItem(
+        tabName = "dashboard",
+        fluidRow(
+          box(plotOutput("plot1", height = 250)),
+          box(title = "Controls",sliderInput("slider", "Number of observations:", 1, 100, 50)
+             )
                 )
-              )
-      ),
+             ),
       
       # Second tab content
-      tabItem(tabName = "widgets",
-              h2("Widgets tab content")
+      tabItem(tabName = "widgets",h2("Widgets tab content")
       )
     )
   )
