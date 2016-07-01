@@ -28,29 +28,34 @@ shinyUI(dashboardPage(
   
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
-      menuItem("Widgets", tabName = "widgets", icon = icon("th")),
+      menuItem("Heuristicas", tabName = "Heuristicas", icon = icon("gears"),
+               selectInput('xcol', 'X Variable', names(df)),
+               selectInput('ycol', 'Y Variable', names(df),
+                           selected=names(df)[[2]]),
+               numericInput('clusters', 'Cluster count', 3,
+                            min = 1, max = 9)
+               
+               ),
       menuItem("Source code", icon = icon("file-code-o"),href = "https://github.com/diluisi/Projeto_Marisa"),
       menuItem("UFABC", icon = icon("university"),href = "http://www.ufabc.edu.br")
       )
     ),
   
   dashboardBody(
-    tabItems(
-      # First tab content
-      tabItem(
-        tabName = "dashboard",
-        fluidRow(
-          box(plotOutput("plot1", height = 250)),
-          box(title = "Controls",sliderInput("slider", "Number of observations:", 1, 100, 50)
-             )
-                )
-             ),
-      
-      # Second tab content
-      tabItem(tabName = "widgets",h2("Widgets tab content")
-      )
-    )
-  )
-)
-)
+    tabBox(side = "right", height = "180px",
+      tabPanel("K-Means",
+               plotOutput('plot1')),
+      tabPanel("EM", 
+               plotOutput('plot2')),
+      tabPanel("Tab3", "Note that when side=right, the tab order is reversed.")  
+    ),
+    fluidRow(
+      tabBox(side = "left", height = "180px",
+        # Title can include an icon
+        title = tagList(shiny::icon("truck"), "Coordenadas dos CDs"),
+        tabPanel("Tabela",
+                 "Coordenadas de longitude e latitude:",
+                 tableOutput("info"))))
+    
+    
+    )))
